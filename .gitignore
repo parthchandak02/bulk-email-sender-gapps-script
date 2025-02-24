@@ -1,0 +1,51 @@
+# Google Apps Script specific
+.clasp.json
+.clasprc.json
+
+# Original files with sensitive data
+email.js
+OCL*.csv
+*tracker*.csv
+*Tracker*.csv
+
+# History and version control
+.history/
+.history
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node.js (if using clasp)
+node_modules/
+package-lock.json
+
+# Only allow specific files
+*
+!email.gs
+!README.md
+!.gitignore
+!sample_data.csv

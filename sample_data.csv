@@ -1,0 +1,15 @@
+First Name,Email,Action,Sent Date,Email Link,Response 1,Response 2
+John Doe,john.doe@example.com,Send Email,,,
+Jane Smith,jane.smith@example.com,Awaiting Response,"February 20, 2024 at 10:30 AM",https://mail.google.com/mail/u/0/#inbox/sample1,"📅 February 21, 2024 at 2:15 PM
+👤 From: jane.smith@example.com
+👥 To: your.email@example.com
+📧 Re: Follow-up Request
+💬 Thank you for reaching out. I would be happy to help...
+🔗 https://mail.google.com/mail/u/0/#inbox/response1",
+Alex Johnson,alex.johnson@example.com,Send Email,,,
+Sarah Williams,sarah.williams@example.com,Awaiting Response,"February 19, 2024 at 3:45 PM",https://mail.google.com/mail/u/0/#inbox/sample2,"📅 February 20, 2024 at 11:30 AM
+👤 From: sarah.williams@example.com
+👥 To: your.email@example.com
+📧 Re: Follow-up Request
+💬 I received your email and would like to discuss further...
+🔗 https://mail.google.com/mail/u/0/#inbox/response2"
