@@ -609,6 +609,16 @@ function processEmailResponses() {
   const isTimeLeft = () => MAX_EXECUTION_TIME > Date.now() - startTime;
   let processedEmails = new Set(); // Track processed emails to avoid duplicates
 
+  // Declared outside the try so the catch block can still use them
+  const log = (message, type = 'info') => {
+    console.log(message);
+    const logs = JSON.parse(PropertiesService.getScriptProperties().getProperty('PROCESS_LOGS') || '[]');
+    logs.push({ message, type, timestamp: new Date().toISOString() });
+    PropertiesService.getScriptProperties().setProperty('PROCESS_LOGS', JSON.stringify(logs));
+  };
+  let awaitingRows = [];
+  let processedCount = 0;
+
   try {
     // Set processing flag
     PropertiesService.getScriptProperties().setProperty('IS_PROCESSING', 'true');
@@ -620,17 +630,10 @@ function processEmailResponses() {
     const sheet = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID).getSheetByName(CONFIG.SHEET_NAME);
     const data = sheet.getDataRange().getValues();
 
-    const log = (message, type = 'info') => {
-      console.log(message);
-      const logs = JSON.parse(PropertiesService.getScriptProperties().getProperty('PROCESS_LOGS') || '[]');
-      logs.push({ message, type, timestamp: new Date().toISOString() });
-      PropertiesService.getScriptProperties().setProperty('PROCESS_LOGS', JSON.stringify(logs));
-    };
-
     log('Starting email response check...');
 
     // Get unique rows awaiting response
-    const awaitingRows = data.reduce((acc, row, index) => {
+    awaitingRows = data.reduce((acc, row, index) => {
       if (index > 0 &&
           row[COLS.ACTION] === 'Awaiting Response' &&
           !processedEmails.has(row[COLS.EMAIL])) {
@@ -656,8 +659,6 @@ function processEmailResponses() {
         message: 'No rows found with "Awaiting Response" status'
       };
     }
-
-    let processedCount = 0;
 
     // Process each row sequentially
     for (const row of awaitingRows) {
@@ -763,8 +764,8 @@ function processEmailResponses() {
     return {
       success: false,
       error: error.message,
-      processedCount: processedCount || 0,
-      totalCount: awaitingRows?.length || 0
+      processedCount: processedCount,
+      totalCount: awaitingRows.length
     };
   }
 }
